@@ -1,4 +1,4 @@
-import { useProgress } from '../context/ProgressContext'
+import { useProgress } from '../context/progress-context'
 import LessonBlocks from './LessonBlocks'
 import Playground from './Playground'
 import Exercise from './Exercise'

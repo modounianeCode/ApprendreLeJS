@@ -1,11 +1,5 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { ProgressContext } from './progress-context'
 
 const STORAGE_KEY = 'apprendre-js-progress'
 
@@ -27,8 +21,6 @@ function loadState() {
     return defaultState
   }
 }
-
-const ProgressContext = createContext(null)
 
 export function ProgressProvider({ children }) {
   const [state, setState] = useState(loadState)
@@ -84,12 +76,4 @@ export function ProgressProvider({ children }) {
       {children}
     </ProgressContext.Provider>
   )
-}
-
-export function useProgress() {
-  const ctx = useContext(ProgressContext)
-  if (!ctx) {
-    throw new Error('useProgress doit être utilisé dans <ProgressProvider>')
-  }
-  return ctx
 }

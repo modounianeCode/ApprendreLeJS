@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useProgress } from '../context/ProgressContext'
+import { useProgress } from '../context/progress-context'
 
 export default function Quiz({ questions, lessonId }) {
   const { getQuizScore, setQuizScore } = useProgress()

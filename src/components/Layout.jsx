@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { modules, totalLessons } from '../data/lessons'
-import { useProgress } from '../context/ProgressContext'
+import { useProgress } from '../context/progress-context'
 
 function SidebarContent({ onNavigate }) {
   const { isLessonComplete } = useProgress()

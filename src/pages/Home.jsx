@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { modules, totalLessons } from '../data/lessons'
-import { useProgress } from '../context/ProgressContext'
+import { useProgress } from '../context/progress-context'
 
 export default function Home() {
   const { isLessonComplete, completedCount, quizCount } = useProgress()

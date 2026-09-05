@@ -1163,7 +1163,7 @@ console.log(calculer(20, '/', 5))`,
           {
             niveau: 'Facile',
             title: 'Addition et soustraction',
-            instructions: 'Créez `calculer(a, operateur, b)` qui gère **`+`** et **`-`**, puis affichez `calculer(10, \"+\", 5)` (attendu : **15**).',
+            instructions: 'Créez `calculer(a, operateur, b)` qui gère **`+`** et **`-`**, puis affichez `calculer(10, "+", 5)` (attendu : **15**).',
             starter: `// if (operateur === '+') return a + b
 // if (operateur === '-') return a - b
 console.log(calculer(10, '+', 5))`,

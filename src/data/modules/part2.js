@@ -1193,7 +1193,7 @@ console.log(\`\${a} + \${b} = \${a + b}\`)   // 5 + 7 = 12`,
         ],
         pieges: [
           'Oublier que le template commence/finit par **un backtick**, pas une apostrophe.',
-          'Utiliser `\${...}` en dehors d\u2019un template literal : ça reste du texte.',
+          'Utiliser `${...}` en dehors d\u2019un template literal : ça reste du texte.',
           'Mélanger des apostrophes dans une chaîne simple créée une erreur (préférez backticks ou guillemets).',
         ],
         playground: {
@@ -1241,7 +1241,7 @@ console.log(\`\${a} + \${b} = \${a + b}\`)`,
         ],
         recap: [
           'Template = chaîne entre **backticks** `` ` ``.',
-          '`\${variable}` ou `\${calcul}` **interpole** en direct.',
+          '`${variable}` ou `${calcul}` **interpole** en direct.',
           'Les templates gèrent naturellement les **multi-lignes**.',
         ],
         quiz: [
@@ -1258,7 +1258,7 @@ console.log(\`\${a} + \${b} = \${a + b}\`)`,
             explanation: 'La syntaxe est ${variable}.',
           },
           {
-            question: '`\`2 + 2 = ${2 + 2}\`` affiche\u2026',
+            question: '``2 + 2 = ${2 + 2}`` affiche\u2026',
             options: ['2 + 2 = 4', '2 + 2 = ${2 + 2}', '4'],
             answer: 0,
             explanation: 'Le calcul est évalué : on obtient "2 + 2 = 4".',
