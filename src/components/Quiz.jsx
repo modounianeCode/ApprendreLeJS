@@ -1,5 +1,42 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useProgress } from '../context/progress-context'
+
+const RING_RADIUS = 42
+const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS
+
+function ScoreRing({ correct, total }) {
+  const pct = total ? (correct / total) * 100 : 0
+  const greenArc = (pct / 100) * RING_CIRCUMFERENCE
+
+  return (
+    <div className="relative mx-auto h-44 w-44">
+      <svg viewBox="0 0 100 100" className="h-full w-full -rotate-90">
+        <circle
+          cx="50"
+          cy="50"
+          r={RING_RADIUS}
+          fill="none"
+          stroke="#f43f5e"
+          strokeWidth="11"
+        />
+        <circle
+          cx="50"
+          cy="50"
+          r={RING_RADIUS}
+          fill="none"
+          stroke="#10b981"
+          strokeWidth="11"
+          strokeLinecap="round"
+          strokeDasharray={`${greenArc} ${RING_CIRCUMFERENCE - greenArc}`}
+        />
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <span className="text-3xl font-black text-white">{Math.round(pct)}%</span>
+        <span className="mt-0.5 text-xs text-slate-400">de réussite</span>
+      </div>
+    </div>
+  )
+}
 
 export default function Quiz({ questions, lessonId }) {
   const { getQuizScore, setQuizScore } = useProgress()
@@ -9,6 +46,16 @@ export default function Quiz({ questions, lessonId }) {
     Array(questions.length).fill(null),
   )
   const [validated, setValidated] = useState(savedScore !== undefined)
+  const [showResult, setShowResult] = useState(false)
+
+  useEffect(() => {
+    if (!showResult) return undefined
+    const onKey = (event) => {
+      if (event.key === 'Escape') setShowResult(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [showResult])
 
   const allAnswered = answers.every((a) => a !== null)
 
@@ -20,11 +67,13 @@ export default function Quiz({ questions, lessonId }) {
   const handleValidate = () => {
     setValidated(true)
     setQuizScore(lessonId, correctCount)
+    setShowResult(true)
   }
 
   const handleRetake = () => {
     setAnswers(Array(questions.length).fill(null))
     setValidated(false)
+    setShowResult(false)
     setQuizScore(lessonId, 0)
   }
 
@@ -175,6 +224,42 @@ export default function Quiz({ questions, lessonId }) {
               Répondez à toutes les questions pour valider.
             </p>
           )}
+        </div>
+      )}
+    {showResult && score !== null && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Résultat du quiz"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-sm"
+          onClick={() => setShowResult(false)}
+        >
+          <div
+            className="card-glow w-full max-w-sm rounded-3xl border border-slate-700 bg-slate-900 p-7 text-center shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <h4 className="text-lg font-bold text-white">Résultat du quiz</h4>
+            <div className="mt-5">
+              <ScoreRing correct={score} total={questions.length} />
+            </div>
+            <div className="mt-5 flex items-center justify-center gap-5 text-sm">
+              <span className="flex items-center gap-2 text-emerald-300">
+                <span className="h-3 w-3 rounded-full bg-emerald-400" />
+                {score} correcte{score > 1 && 's'}
+              </span>
+              <span className="flex items-center gap-2 text-rose-300">
+                <span className="h-3 w-3 rounded-full bg-rose-400" />
+                {questions.length - score} incorrecte
+                {questions.length - score > 1 && 's'}
+              </span>
+            </div>
+            <button
+              onClick={() => setShowResult(false)}
+              className="mt-6 w-full rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-primary-500/20 transition hover:shadow-primary-500/40 hover:brightness-110"
+            >
+              Continuer
+            </button>
+          </div>
         </div>
       )}
     </section>
