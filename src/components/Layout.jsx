@@ -21,9 +21,11 @@ function SidebarContent({ onNavigate }) {
           onClick={onNavigate}
           className="group flex items-center gap-3"
         >
-          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-300 via-orange-400 to-rose-500 text-xl font-black text-slate-950 shadow-lg shadow-orange-500/20 ring-1 ring-white/10 transition group-hover:scale-105 group-hover:shadow-orange-500/40">
-            JS
-          </span>
+          <img
+            src="/favicon.svg"
+            alt="Logo JavaScript"
+            className="h-11 w-11 rounded-2xl ring-1 ring-white/10 transition group-hover:scale-105 group-hover:shadow-yellow-500/40"
+          />
           <div>
             <p className="text-sm font-bold leading-tight text-white">
               Apprendre JavaScript
@@ -171,9 +173,11 @@ export default function Layout() {
             </svg>
           </button>
           <NavLink to="/" className="flex flex-1 items-center gap-2.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-amber-300 via-orange-400 to-rose-500 text-sm font-black text-slate-950 shadow-lg shadow-orange-500/20 ring-1 ring-white/10">
-              JS
-            </span>
+            <img
+              src="/favicon.svg"
+              alt="Logo JavaScript"
+              className="h-9 w-9 rounded-xl ring-1 ring-white/10"
+            />
             <span className="truncate text-sm font-bold text-white">
               Apprendre JavaScript
             </span>
