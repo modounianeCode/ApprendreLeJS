@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
+import { HashRouter, Route, Routes, useLocation } from 'react-router-dom'
 import { ProgressProvider } from './context/ProgressContext'
 import Layout from './components/Layout'
 import Home from './pages/Home'
@@ -18,7 +18,7 @@ function ScrollToTop() {
 export default function App() {
   return (
     <ProgressProvider>
-      <BrowserRouter>
+      <HashRouter>
         <ScrollToTop />
         <Routes>
           <Route element={<Layout />}>
@@ -28,7 +28,7 @@ export default function App() {
             <Route path="*" element={<Home />} />
           </Route>
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </ProgressProvider>
   )
 }

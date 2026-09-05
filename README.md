@@ -41,7 +41,7 @@ Pour l'activer :
 ## 🧱 Stack
 
 - [Vite](https://vite.dev) + [React 19](https://react.dev)
-- [React Router](https://reactrouter.com) (BrowserRouter)
+- [React Router](https://reactrouter.com) (HashRouter — rechargement fiable sur GitHub Pages)
 - [Tailwind CSS v4](https://tailwindcss.com)
 - [Monaco Editor](https://microsoft.github.io/monaco-editor/) via `@monaco-editor/react`
 - [Oxlint](https://oxc.rs)
