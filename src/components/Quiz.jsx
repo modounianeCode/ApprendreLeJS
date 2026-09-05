@@ -39,13 +39,12 @@ function ScoreRing({ correct, total }) {
 }
 
 export default function Quiz({ questions, lessonId }) {
-  const { getQuizScore, setQuizScore } = useProgress()
-  const savedScore = getQuizScore(lessonId)
+  const { setQuizScore } = useProgress()
 
   const [answers, setAnswers] = useState(() =>
     Array(questions.length).fill(null),
   )
-  const [validated, setValidated] = useState(savedScore !== undefined)
+  const [validated, setValidated] = useState(false)
   const [showResult, setShowResult] = useState(false)
 
   useEffect(() => {
@@ -226,7 +225,7 @@ export default function Quiz({ questions, lessonId }) {
           )}
         </div>
       )}
-    {showResult && score !== null && (
+      {showResult && score !== null && (
         <div
           role="dialog"
           aria-modal="true"
