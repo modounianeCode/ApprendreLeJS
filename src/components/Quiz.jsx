@@ -230,34 +230,87 @@ export default function Quiz({ questions, lessonId }) {
           role="dialog"
           aria-modal="true"
           aria-label="Résultat du quiz"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-slate-950/80 p-4 backdrop-blur-sm sm:items-center"
           onClick={() => setShowResult(false)}
         >
           <div
-            className="card-glow w-full max-w-sm rounded-3xl border border-slate-700 bg-slate-900 p-7 text-center shadow-2xl"
+            className="card-glow flex w-full max-w-3xl flex-col gap-7 rounded-3xl border border-slate-700 bg-slate-900 p-6 shadow-2xl sm:flex-row sm:p-8"
             onClick={(event) => event.stopPropagation()}
           >
-            <h4 className="text-lg font-bold text-white">Résultat du quiz</h4>
-            <div className="mt-5">
+            <div className="flex shrink-0 flex-col items-center justify-center text-center sm:w-56">
+              <h4 className="mb-4 text-lg font-bold text-white">Résultat du quiz</h4>
               <ScoreRing correct={score} total={questions.length} />
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-sm">
+                <span className="flex items-center gap-2 text-emerald-300">
+                  <span className="h-3 w-3 rounded-full bg-emerald-400" />
+                  {score} correcte{score > 1 && 's'}
+                </span>
+                <span className="flex items-center gap-2 text-rose-300">
+                  <span className="h-3 w-3 rounded-full bg-rose-400" />
+                  {questions.length - score} incorrecte
+                  {questions.length - score > 1 && 's'}
+                </span>
+              </div>
+              <button
+                onClick={() => setShowResult(false)}
+                className="mt-5 w-full rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-primary-500/20 transition hover:shadow-primary-500/40 hover:brightness-110"
+              >
+                Continuer
+              </button>
             </div>
-            <div className="mt-5 flex items-center justify-center gap-5 text-sm">
-              <span className="flex items-center gap-2 text-emerald-300">
-                <span className="h-3 w-3 rounded-full bg-emerald-400" />
-                {score} correcte{score > 1 && 's'}
-              </span>
-              <span className="flex items-center gap-2 text-rose-300">
-                <span className="h-3 w-3 rounded-full bg-rose-400" />
-                {questions.length - score} incorrecte
-                {questions.length - score > 1 && 's'}
-              </span>
+
+            <div className="min-w-0 flex-1 space-y-2.5 self-center sm:max-h-[60vh] sm:self-stretch sm:overflow-y-auto sm:pr-1">
+              {questions.map((question, qi) => {
+                const selected = answers[qi]
+                const isCorrect = selected === question.answer
+                return (
+                  <div
+                    key={qi}
+                    className={`rounded-xl border p-3.5 ${
+                      isCorrect
+                        ? 'border-emerald-400/40 bg-emerald-400/[0.07]'
+                        : 'border-rose-400/30 bg-rose-400/[0.05]'
+                    }`}
+                  >
+                    <div className="flex items-start gap-2.5">
+                      <span
+                        className={`mt-0.5 inline-flex shrink-0 items-center rounded-full px-2 py-0.5 text-xs font-bold ${
+                          isCorrect
+                            ? 'bg-emerald-400/20 text-emerald-300 ring-1 ring-emerald-400/30'
+                            : 'bg-rose-400/20 text-rose-300 ring-1 ring-rose-400/30'
+                        }`}
+                      >
+                        {isCorrect ? '✓' : '✗'}
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm font-medium leading-snug text-slate-100">
+                          {qi + 1}. {question.question}
+                        </p>
+                        <p className="mt-1 text-xs leading-relaxed">
+                          {isCorrect ? (
+                            <span className="text-emerald-300">
+                              {question.options[selected]}
+                            </span>
+                          ) : (
+                            <span className="text-rose-300">
+                              {question.options[selected]} →{' '}
+                              <span className="text-emerald-300">
+                                {question.options[question.answer]}
+                              </span>
+                            </span>
+                          )}
+                        </p>
+                        {question.explanation && (
+                          <p className="mt-1 text-xs text-slate-400">
+                            {question.explanation}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
             </div>
-            <button
-              onClick={() => setShowResult(false)}
-              className="mt-6 w-full rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-primary-500/20 transition hover:shadow-primary-500/40 hover:brightness-110"
-            >
-              Continuer
-            </button>
           </div>
         </div>
       )}
